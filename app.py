@@ -30,15 +30,19 @@ def process_file(doc):
 # Method for Handling User Input
 def handle_userinput(query):
 
-    response = st.session_state.conversation({"question": query, 'chat_history':st.session_state.chat_history}, return_only_outputs=True)
-    st.session_state.chat_history += [(query, response['answer'])]
+    if st.session_state.conversation is not None:
 
-    st.session_state.N = list(response['source_documents'][0])[1][1]['page']
-    
-    
-    for i, message in enumerate(st.session_state.chat_history): 
-         st.session_state.expander1.write(user_template.replace("{{MSG}}", message[0]), unsafe_allow_html=True)
-         st.session_state.expander1.write(bot_template.replace("{{MSG}}", message[1]), unsafe_allow_html=True)
+        response = st.session_state.conversation({"question": query, 'chat_history':st.session_state.chat_history}, return_only_outputs=True)
+        st.session_state.chat_history += [(query, response['answer'])]
+
+        st.session_state.N = list(response['source_documents'][0])[1][1]['page']
+        
+        for i, message in enumerate(st.session_state.chat_history):
+            st.session_state.expander1.write(user_template.replace("{{MSG}}", message[0]), unsafe_allow_html=True)
+            st.session_state.expander1.write(bot_template.replace("{{MSG}}", message[1]), unsafe_allow_html=True)
+
+    else:
+        st.warning("Please upload and process a PDF before asking questions.")
 
 
 
