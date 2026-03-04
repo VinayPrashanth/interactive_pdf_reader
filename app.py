@@ -49,6 +49,9 @@ def handle_userinput(query):
 
 def main():
     pass
+
+    if "N" not in st.session_state:
+        st.session_state.N = 0  # or a sensible default
     
     # Create Web-page Layout
     load_dotenv()
