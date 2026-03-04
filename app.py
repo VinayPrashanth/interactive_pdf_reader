@@ -113,16 +113,16 @@ def main():
             pdf_writer.add_page(reader.pages[start])
             start+=1
             
-        # # Use BytesIO for the output PDF chunk as well
-        # # This prevents the second PermissionError you would encounter later with temp2
-        # with io.BytesIO() as output_pdf_stream:
-        #     pdf_writer.write(output_pdf_stream)
-        #     base64_pdf = base64.b64encode(output_pdf_stream.getvalue()).decode('utf-8')
+        # Use BytesIO for the output PDF chunk as well
+        # This prevents the second PermissionError you would encounter later with temp2
+        with io.BytesIO() as output_pdf_stream:
+            pdf_writer.write(output_pdf_stream)
+            base64_pdf = base64.b64encode(output_pdf_stream.getvalue()).decode('utf-8')
 
-        #     # Embed the PDF
-        #     pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}#page={3}" width="100%" height="900" type="application/pdf" frameborder="0"></iframe>'
+            # Embed the PDF
+            pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}#page={3}" width="100%" height="900" type="application/pdf" frameborder="0"></iframe>'
         
-        #     st.session_state.col2.markdown(pdf_display, unsafe_allow_html=True)
+            st.session_state.col2.markdown(pdf_display, unsafe_allow_html=True)
 
     
        
